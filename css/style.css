@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
 }
+
 .navbar-brand img {
   width: 50px;
   background-color: #3885fa;
@@ -102,4 +103,11 @@
 #create-form, #edit-form {
   max-width: 500px;
   margin: 0 auto;
+}
+
+/*mobile */
+@media(max-width: 480px) {
+  #home-link {
+    display: none;
+  }
 }
