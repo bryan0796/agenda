@@ -10,7 +10,7 @@ $data = $_POST;
 // modificações no banco
 if (!empty($data)) {
   // criar contato
-  if($data['type'] === 'create') {
+  if ($data['type'] === 'create') {
     $name = $data['name'];
     $phone = $data['phone'];
     $observations = $data['observations'];
@@ -21,15 +21,15 @@ if (!empty($data)) {
     $stmt->bindParam(":name", $name);
     $stmt->bindParam(":phone", $phone);
     $stmt->bindParam(":observations", $observations);
-  
+
     try {
       $stmt->execute();
       $_SESSION['msg'] = "Contato criado com sucesso!";
-    } catch(PDOException $e) {
+    } catch (PDOException $e) {
       $error = $e->getMessage();
       echo "Erro: $error";
     }
-  } else if($data['type'] === 'edit') {
+  } else if ($data['type'] === 'edit') {
     $name = $data['name'];
     $phone = $data['phone'];
     $observations = $data['observations'];
@@ -41,13 +41,27 @@ if (!empty($data)) {
 
     $stmt = $conn->prepare($query);
     $stmt->bindParam(":name", $name);
-    $stmt->bindParam(":phone", $phone);          
+    $stmt->bindParam(":phone", $phone);
     $stmt->bindParam(":observations", $observations);
-    $stmt->bindParam(":id", $id);          
+    $stmt->bindParam(":id", $id);
 
     try {
       $stmt->execute();
       $_SESSION['msg'] = "Dados alterados com sucesso!";
+    } catch (PDOException $e) {
+      $error = $e->getMessage();
+      echo "Erro: $error";
+    }
+  } else if ($data['type'] === 'delete') {
+    $id = $data['id'];
+
+    $query = "DELETE FROM contacts WHERE id = :id";
+
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(':id', $id);
+    try {
+      $stmt->execute();
+      $_SESSION['msg'] = "Contato removido com sucesso!";
     } catch(PDOException $e) {
       $error = $e->getMessage();
       echo "Erro: $error";

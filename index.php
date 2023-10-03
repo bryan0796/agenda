@@ -1,16 +1,16 @@
 <?php
-  include_once("templates/header.php");
+include_once("templates/header.php");
 ?>
 
 <div class="container">
-  <?php if(isset($printMsg) && $printMsg != ''): ?>
+  <?php if (isset($printMsg) && $printMsg != ''): ?>
     <p id="msg">
       <?= $printMsg ?>
     </p>
   <?php endif; ?>
   <h1 id="main-title">Minha Agenda</h1>
-  <?php if(count($contacts) > 0): ?>
-    <table id="contacts-table" class="table" >
+  <?php if (count($contacts) > 0): ?>
+    <table id="contacts-table" class="table">
       <thead class="custom-thead">
         <tr>
           <th scope="col">#</th>
@@ -20,19 +20,28 @@
         </tr>
       </thead>
       <tbody>
-        <?php foreach($contacts as $contact): ?>
+        <?php foreach ($contacts as $contact): ?>
           <tr>
-            <td class="col-id" scope="row"><?=$contact["id"]?></td>
-            <td scope="row"><?=$contact["name"]?></td>
-            <td scope="row"><?=$contact["phone"]?></td>
+            <td class="col-id" scope="row">
+              <?= $contact["id"] ?>
+            </td>
+            <td scope="row">
+              <?= $contact["name"] ?>
+            </td>
+            <td scope="row">
+              <?= $contact["phone"] ?>
+            </td>
             <td class="actions">
               <a href="<?= $BASE_URL ?>show.php?id=<?= $contact["id"] ?>"><i class="fas fa-eye check-icon"></i></a>
               <a href="<?= $BASE_URL ?>edit.php?id=<?= $contact['id'] ?>"><i class="fas fa-edit edit-icon"></i></a>
-              <button
-              class="delete-btn" type="submit"><i class="fas fa-times delete-icon"></i></button>
+              <form class="delete-form" action="<?=$BASE_URL?>config/process.php" method="post">
+                <input type="hidden" name="type" value="delete">
+                <input type="hidden" name="id" value="<?= $contact['id'] ?>">
+                <button class="delete-btn" type="submit"><i class="fas fa-times delete-icon"></i></button>
+              </form>
             </td>
           </tr>
-        <?php endforeach ?>  
+        <?php endforeach ?>
       </tbody>
     </table>
   <?php else: ?>
@@ -40,5 +49,5 @@
   <?php endif; ?>
 </div>
 <?php
-  include_once("templates/footer.php");
+include_once("templates/footer.php");
 ?>
